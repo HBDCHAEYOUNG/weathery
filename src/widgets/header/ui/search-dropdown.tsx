@@ -1,3 +1,4 @@
+import FavoriteToggleButton from "@/features/favorite/ui/favorite-toggle-button";
 import { useDebounce } from "@/shared/hook/useDebounce";
 import useDistrictFilter from "@/shared/hook/useDistrictFilter";
 import { Input } from "@/shared/ui/_shadcn/input";
@@ -47,12 +48,13 @@ function SearchDropdown() {
           {filteredDistricts.map((district) => (
             <li
               key={district}
-              className="flex items-center common-padding-y gap-2 cursor-pointer hover:bg-gray-100 common-padding-x"
+              className="flex items-center common-padding-y gap-2 cursor-pointer hover:bg-gray-100 common-padding-x "
             >
               <Button>🔍</Button>
               <Link key={district} to={`/district/${district}`}>
                 {district.split("-").join(" ")}
               </Link>
+              <FavoriteToggleButton district={district} />
             </li>
           ))}
         </ul>
