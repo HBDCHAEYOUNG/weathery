@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Header from "./header";
 
 function BasicLayout() {
   return (
-    <div>
-      <h1>BasicLayout</h1>
+    <div className="flex flex-col items-center w-screen h-screen ">
+      <Header />
       <Outlet />
     </div>
   );
