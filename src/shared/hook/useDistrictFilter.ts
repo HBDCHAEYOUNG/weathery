@@ -1,10 +1,9 @@
 import { useMemo } from "react";
-import { getDistricts } from "../api/districts.api";
+import koreaDistricts from "@/shared/const/korea-districts.json";
 
 function useDistrictFilter(searchText: string) {
-  const koreaDistricts = getDistricts();
   return useMemo(() => {
-    if (!searchText) return koreaDistricts;
+    if (!searchText) return [];
 
     const searchWords = searchText
       .trim()
@@ -16,7 +15,7 @@ function useDistrictFilter(searchText: string) {
       const normalizedDistrict = district.replace(/[\s-]/g, "");
       return searchWords.every((word) => normalizedDistrict.includes(word));
     });
-  }, [searchText, koreaDistricts]);
+  }, [searchText]);
 }
 
 export default useDistrictFilter;
