@@ -1,3 +1,4 @@
+import NavLink from "@/entities/navigation/ui/nav-link";
 import SearchDropdown from "@/widgets/header/ui/search-dropdown";
 import { Link } from "react-router-dom";
 
@@ -10,9 +11,9 @@ function Header() {
         </Link>
         <SearchDropdown />
       </div>
-      <div className="flex justify-around">
-        <Link to="/">홈</Link>
-        <Link to="/favorites">즐겨찾기</Link>
+      <div className="flex common-padding-bottom">
+        <NavLink to="/">홈</NavLink>
+        <NavLink to="/favorites">즐겨찾기</NavLink>
       </div>
     </div>
   );
