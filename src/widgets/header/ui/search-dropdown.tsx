@@ -1,34 +1,30 @@
 import FavoriteToggleButton from "@/features/favorite/ui/favorite-toggle-button";
 import { useDebounce } from "@/shared/hook/useDebounce";
 import useDistrictFilter from "@/shared/hook/useDistrictFilter";
+import { useDropdownStore } from "@/shared/store/dropdown.store";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/shared/ui/_shadcn/dropdown-menu";
 import { Input } from "@/shared/ui/_shadcn/input";
 import CircleButton from "@/shared/ui/button/circle-button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
 function SearchDropdown() {
-  const [searchText, setSearchText] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-
+  const {
+    isOpen,
+    searchText,
+    setSearchText,
+    handleOpenChange,
+  } = useDropdownStore();
+  
   const debouncedSearchText = useDebounce(searchText, 300);
   const filteredDistricts = useDistrictFilter(debouncedSearchText);
 
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-    if (!open) setSearchText("");
-  };
-
   return (
-    <DropdownMenu onOpenChange={handleOpenChange}>
+    <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger className="common-padding-right text-2xl">
         {isOpen ? "✕" : "🔍"}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-background w-screen h-screen z-50">
+      <DropdownMenuContent className="bg-background w-screen h-screen z-50 border-none">
         <div className="common-padding relative">
           <Input
             placeholder="국내 도시를 검색해 보세요"
