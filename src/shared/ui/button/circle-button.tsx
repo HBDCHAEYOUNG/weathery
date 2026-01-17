@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 
-function Button({
+function CircleButton({
   children,
   className,
   onClick,
@@ -12,7 +12,7 @@ function Button({
   return (
     <button
       className={cn(
-        "size-8 flex items-center justify-center rounded-full bg-gray-200 p-2",
+        "size-8 flex items-center justify-center rounded-full bg-gray-200 p-2 cursor-pointer",
         className
       )}
       onClick={onClick}
@@ -22,4 +22,4 @@ function Button({
   );
 }
 
-export default Button;
+export default CircleButton;
