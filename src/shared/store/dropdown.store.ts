@@ -20,7 +20,11 @@ export const useDropdownStore = create<DropdownProps>()(
   persist(
     (set) => ({
       ...INIT,
-      toggle: () => set((state) => ({ isOpen: !state.isOpen, searchText: "" })),
+      toggle: () => set((state) => {
+        const willOpen = !state.isOpen;
+        if (willOpen) window.scrollTo({ top: 0, behavior: 'smooth' });
+        return { isOpen: willOpen, searchText: "" };
+      }),
       setSearchText: (text: string) => set({ searchText: text }),
     }),
     {
