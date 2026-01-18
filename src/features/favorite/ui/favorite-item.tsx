@@ -35,8 +35,8 @@ function FavoriteItem({ district }: { district: string }) {
         </small>
       </div>
 
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center gap-2 md:flex-row">
+        <div className="flex items-center gap-2 md:mr-40">
           <span className="text-4xl">{forecastData?.weatherIcon || ""}</span>
           <p className="text-2xl font-bold">
             {nowcastData?.currentTemp
@@ -45,7 +45,7 @@ function FavoriteItem({ district }: { district: string }) {
           </p>
         </div>
 
-        <small className="text-gray-500 font-semibold">
+        <small className="text-gray-500 font-semibold md:text-xl">
           최고 {forecastData?.maxTemp ? `${Math.round(forecastData.maxTemp)}°` : "-"} / 최저{" "}
           {forecastData?.minTemp ? `${Math.round(forecastData.minTemp)}°` : "-"}
         </small>

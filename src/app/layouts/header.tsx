@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full max-w">
       <div className="flex justify-between common-padding-y">
         <Link to="/" className="common-padding-left text-2xl font-bold">
           오늘 날씨

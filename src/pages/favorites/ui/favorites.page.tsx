@@ -7,11 +7,11 @@ function FavoritesPage() {
   const { toggle } = useDropdownStore();
 
   return (
-    <div className=" grid grid-cols-1 gap-4 w-full common-padding-x common-padding-bottom">
+    <div className=" grid grid-cols-1 gap-4 w-full common-padding-x common-padding-bottom max-w">
       {favorites.map((favorite) => (
         <FavoriteItem key={favorite.district} district={favorite.district} />
       ))}
-      <button onClick={toggle} className="cursor-pointer">🔍 도시 추가하기</button>
+      {favorites.length < 6 && <button onClick={toggle} className="cursor-pointer mb-10">🔍 도시 추가하기</button>}
     </div>
   );
 }
