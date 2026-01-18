@@ -10,7 +10,7 @@ function CurrentWeather({ nowcastData, forecastData }: CurrentWeatherProps) {
   const date = dayjs().format("MM.DD");
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2">
+    <div className="flex flex-col justify-center items-center gap-2 mb-12">
       <p className="border border-gray-300 rounded-full px-4 py-1 font-bold">
         현재 {date}
       </p>
