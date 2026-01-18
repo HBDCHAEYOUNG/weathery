@@ -4,17 +4,25 @@ import { Link } from "react-router-dom";
 import CircleButton from "@/shared/ui/button/circle-button";
 import { useFavoritesStore } from "@/shared/store/favorites.store";
 
-function FavoriteItem({ district, editMode }: { district: string, editMode: boolean }) {
+function FavoriteItem({ district, nickname, editMode }: { district: string, nickname?: string, editMode: boolean }) {
   const { nowcastData, forecastData } = useWeatherData({ 
     district, 
     numOfRows: 200 
   });
-  const { removeFavorite } = useFavoritesStore();
+  const { removeFavorite, updateNickname } = useFavoritesStore();
 
   const partsDistrict = district.split("-");
   
   const handleDelete = () => {
     removeFavorite(district);
+  };
+
+  const handleUpdateNickname = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const newNickname = prompt("별칭을 입력하세요:", nickname || "");
+    if (newNickname !== null) {
+      updateNickname(district, newNickname.trim());
+    }
   };
   
   return (
@@ -25,10 +33,11 @@ function FavoriteItem({ district, editMode }: { district: string, editMode: bool
       >
         <div className="flex flex-col justify-between h-full">
           <h1 className="font-semibold text-lg! mb-auto">
-            {partsDistrict.slice(-1)}
+            {nickname || partsDistrict.slice(-1)}
+            <button onClick={handleUpdateNickname} className="cursor-pointer ml-2">✏️</button>
           </h1>
           <small className="text-gray-500 font-semibold">
-            대한민국 {partsDistrict.slice(0, -1).join(" ")}
+            대한민국 {nickname ? partsDistrict.join(" ") : partsDistrict.slice(0, -1).join(" ")}
           </small>
         </div>
 

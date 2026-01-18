@@ -15,7 +15,7 @@ function FavoritesPage() {
         {editMode ? "완료" : "편집하기"}
       </button>
       {favorites.map((favorite) => (
-        <FavoriteItem key={favorite.district} district={favorite.district} editMode={editMode} />
+        <FavoriteItem key={favorite.district} district={favorite.district} nickname={favorite.nickname} editMode={editMode} />
       ))}
       {favorites.length < 6 && <button onClick={toggle} className="cursor-pointer mb-10">🔍 도시 추가하기</button>}
     </div>
