@@ -3,8 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 
 function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const isActive = pathname.startsWith(to);
-
+  const isActive = to === "/" 
+  ? pathname !== "/favorites"
+  : pathname.startsWith(to);
+  
   return (
     <Link
       to={to}
