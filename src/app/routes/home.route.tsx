@@ -13,6 +13,10 @@ export const HomeRoute: RouteObject = {
       element: <HomePage />,
     },
     {
+      path: "/:district",
+      element: <HomePage />,
+    },
+    {
       path: "/favorites",
       element: <FavoritesPage />,
     },

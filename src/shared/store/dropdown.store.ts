@@ -9,7 +9,6 @@ interface Dropdown {
 interface DropdownProps extends Dropdown {
   toggle: () => void;
   setSearchText: (text: string) => void;
-  handleOpenChange: (open: boolean) => void;
 }
 
 const INIT = {
@@ -21,10 +20,8 @@ export const useDropdownStore = create<DropdownProps>()(
   persist(
     (set) => ({
       ...INIT,
-      toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+      toggle: () => set((state) => ({ isOpen: !state.isOpen, searchText: "" })),
       setSearchText: (text: string) => set({ searchText: text }),
-      handleOpenChange: (open: boolean) =>
-        set({ isOpen: open, ...(open ? {} : { searchText: "" }) }),
     }),
     {
       name: "dropdown-storage",

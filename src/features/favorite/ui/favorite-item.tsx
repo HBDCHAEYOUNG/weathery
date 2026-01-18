@@ -1,13 +1,12 @@
+import { encodeDistrict } from "@/shared/lib/url-utils";
 import { parseShortForecastData, parseUltraShortNowcastData } from "@/shared/lib/weather-utils/prase-forecast-data";
-import useGeocodeQuery from "@/shared/model/geocode.query";
+import { useGeocodeQuery } from "@/shared/model/geocode.query";
 import { useShortForecastQuery, useUltraShortNowcastQuery } from "@/shared/model/weather.query";
 import type { ForecastResponse, WeatherResponse } from "@/shared/model/weather.schema";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //TODO: 즐겨찾기 삭제 기능 추가
 function FavoriteItem({ district }: { district: string }) {
-  const navigate = useNavigate();
-
   const { data: geocodeData } = useGeocodeQuery(district || "");
 
   const { data: ultraShortNowcastResponse } = useUltraShortNowcastQuery({
@@ -26,14 +25,9 @@ function FavoriteItem({ district }: { district: string }) {
 
   const partsDistrict = district.split("-");
 
-  const handleDistrictClick = (district: string) => {
-    navigate(`/${district}`);
-  };
-
   return (
     <Link
-      to={`/${district}`}
-      onClick={() => handleDistrictClick(district)}
+      to={`/${encodeDistrict(district)}`}
       className="flex gap-2 justify-between items-center border border-gray-300 p-4 rounded-md relative hover:shadow-md"
     >
       {/* <button
