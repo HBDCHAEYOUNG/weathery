@@ -38,25 +38,33 @@ export interface UseWeatherDataReturn {
   tomorrowTemps: Array<{ date: string; time: string; temp: number; icon?: string }>;
 }
 
-function useWeatherData(): UseWeatherDataReturn {
-  const { district } = useParams();
+interface UseWeatherDataOptions {
+  district?: string;
+  numOfRows?: number;
+}
+
+function useWeatherData(options?: UseWeatherDataOptions): UseWeatherDataReturn {
+  const { district: districtFromParams } = useParams();
   const { coordinates } = useCurrentLocation();
 
   const today = dayjs().format("YYYYMMDD");
   const tomorrow = dayjs().add(1, "day").format("YYYYMMDD");
 
+  // district가 옵션으로 전달되면 그것을 사용, 없으면 현재 위치 또는 params 사용
+  const district = options?.district || districtFromParams;
+  
   const { data: currentLocation } = useReverseGeocodeQuery(
     coordinates?.lng || 0,
     coordinates?.lat || 0,
   );
   
-  const location = currentLocation
-    ? currentLocation?.split(" ").slice(-2).join(" ")
-    : district?.split("-")?.slice(-2).join(" ") || "";
+  // 위치 결정: district가 있으면 그것을 우선, 없으면 현재 위치
+  const geocodeQueryInput = district || currentLocation || "";
+  const location = district
+    ? district.split("-").slice(-2).join(" ")
+    : currentLocation?.split(" ").slice(-2).join(" ") || "";
 
-  const { data: geocodeData } = useGeocodeQuery(
-    currentLocation || district || "",
-  );
+  const { data: geocodeData } = useGeocodeQuery(geocodeQueryInput);
 
   const { data: ultraShortNowcastResponse } = useUltraShortNowcastQuery({
     nx: geocodeData?.nx || 0,
@@ -66,7 +74,7 @@ function useWeatherData(): UseWeatherDataReturn {
   const { data: shortForecastResponse } = useShortForecastQuery({
     nx: geocodeData?.nx || 0,
     ny: geocodeData?.ny || 0,
-    numOfRows: 200,
+    numOfRows: options?.numOfRows || 450,
   }) as { data: ForecastResponse };
 
   const nowcastData = parseUltraShortNowcastData(ultraShortNowcastResponse);

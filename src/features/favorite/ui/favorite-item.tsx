@@ -1,30 +1,16 @@
 import { encodeDistrict } from "@/shared/lib/url-utils";
-import { parseShortForecastData, parseUltraShortNowcastData } from "@/shared/lib/weather-utils/prase-forecast-data";
-import { useGeocodeQuery } from "@/shared/model/geocode.query";
-import { useShortForecastQuery, useUltraShortNowcastQuery } from "@/shared/model/weather.query";
-import type { ForecastResponse, WeatherResponse } from "@/shared/model/weather.schema";
+import useWeatherData from "@/features/weather/model/use-weather-data";
 import { Link } from "react-router-dom";
 
 //TODO: 즐겨찾기 삭제 기능 추가
 function FavoriteItem({ district }: { district: string }) {
-  const { data: geocodeData } = useGeocodeQuery(district || "");
-
-  const { data: ultraShortNowcastResponse } = useUltraShortNowcastQuery({
-    nx: geocodeData?.nx || 0,
-    ny: geocodeData?.ny || 0,
-  }) as { data: WeatherResponse };
-
-  const { data: shortForecastResponse } = useShortForecastQuery({
-    nx: geocodeData?.nx || 0,
-    ny: geocodeData?.ny || 0,
-    numOfRows: 1000,
-  }) as { data: ForecastResponse };
-
-  const nowcastData = parseUltraShortNowcastData(ultraShortNowcastResponse);
-  const forecastData = parseShortForecastData(shortForecastResponse);
+  const { nowcastData, forecastData } = useWeatherData({ 
+    district, 
+    numOfRows: 200 
+  });
 
   const partsDistrict = district.split("-");
-
+  
   return (
     <Link
       to={`/${encodeDistrict(district)}`}
