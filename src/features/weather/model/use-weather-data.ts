@@ -57,12 +57,10 @@ function useWeatherData(options?: UseWeatherDataOptions): UseWeatherDataReturn {
     coordinates?.lng || 0,
     coordinates?.lat || 0,
   );
-  
+
   // 위치 결정: district가 있으면 그것을 우선, 없으면 현재 위치
   const geocodeQueryInput = district || currentLocation || "";
-  const location = district
-    ? district.split("-").slice(-2).join(" ")
-    : currentLocation?.split(" ").slice(-2).join(" ") || "";
+  const location = district? district : currentLocation?.split(" ").join("-") || ""
 
   const { data: geocodeData } = useGeocodeQuery(geocodeQueryInput);
 

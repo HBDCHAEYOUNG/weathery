@@ -7,7 +7,7 @@ function WeatherHeader() {
     <div className="flex flex-col mb-12 mt-8 common-padding-x">
       <nav className="flex gap-2">
         <FavoriteToggleButton district={location || ""} className="ml-0" />
-        <p className="font-bold text-3xl!">{location}</p>
+        <p className="font-bold text-3xl!">{location.split("-").slice(-2).join(" ")}</p>
       </nav>
     </div>
   );
