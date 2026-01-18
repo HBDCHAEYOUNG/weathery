@@ -10,7 +10,7 @@ interface FavoritesState {
 }
 
 interface FavoriteProps extends FavoritesState {
-  addFavorite: (favorite: Favorite) => void;
+  addFavorite: (favorite: Favorite) => boolean;
   removeFavorite: (id: string) => void;
 }
 
@@ -18,12 +18,20 @@ const INIT = {
   favorites: [],
 };
 
+
 export const useFavoritesStore = create<FavoriteProps>()(
   persist(
     (set) => ({
       ...INIT,
-      addFavorite: (favorite: Favorite) =>
-        set((state) => ({ favorites: [...state.favorites, favorite] })),
+      addFavorite: (favorite: Favorite) => {
+        let added = false;
+        set((state) => {
+          if (state.favorites.length >= 6) return state; 
+          added = true;
+          return { favorites: [...state.favorites, favorite] };
+        });
+        return added;
+      },
       removeFavorite: (district: string) =>
         set((state) => ({
           favorites: state.favorites.filter(
