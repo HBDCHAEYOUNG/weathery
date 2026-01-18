@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { ParsedNowcast, ParsedWeather } from "@/features/weather/model/use-weather-data";
+import type { ParsedNowcast, ParsedWeather } from "@/shared/hook/useWeatherData";
 
 interface CurrentWeatherProps {
   nowcastData: ParsedNowcast | null;

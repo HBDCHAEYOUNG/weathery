@@ -1,5 +1,5 @@
 import { encodeDistrict } from "@/shared/lib/url-utils";
-import useWeatherData from "@/features/weather/model/use-weather-data";
+import useWeatherData from "@/shared/hook/useWeatherData";
 import { Link } from "react-router-dom";
 import CircleButton from "@/shared/ui/button/circle-button";
 import { useFavoritesStore } from "@/shared/store/favorites.store";

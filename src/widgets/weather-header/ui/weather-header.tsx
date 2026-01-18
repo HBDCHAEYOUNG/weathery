@@ -1,5 +1,5 @@
 import FavoriteToggleButton from "@/features/favorite/ui/favorite-toggle-button";
-import useWeatherData from "@/features/weather/model/use-weather-data";
+import useWeatherData from "@/shared/hook/useWeatherData";
 
 function WeatherHeader() {
   const { location } = useWeatherData();

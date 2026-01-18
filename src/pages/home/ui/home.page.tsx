@@ -1,7 +1,7 @@
 import CurrentWeather from "@/widgets/current-weather/ui/current-weather";
 import HourlyForecast from "@/widgets/hourly-forecast/ui/hourly-forecast";
 import WeatherHeader from "@/widgets/weather-header/ui/weather-header";
-import useWeatherData from "@/features/weather/model/use-weather-data";
+import useWeatherData from "@/shared/hook/useWeatherData";
 
 function HomePage() {
   const { nowcastData, forecastData, todayTemps, tomorrowTemps } = useWeatherData();
