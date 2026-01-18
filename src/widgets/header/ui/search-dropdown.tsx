@@ -63,7 +63,7 @@ function SearchDropdown() {
           )) : <li className="flex flex-col items-center common-padding-y">
             <span className="w-full text-center">도·군·면·리·동 단위로 주소를 입력해 주세요.
             (예: 서울특별시 종로구)</span>
-            {searchText && <span className="w-full text-center">"{searchText}"의 날씨정보는 제공되지 않습니다.</span>}
+            {debouncedSearchText && <span className="w-full text-center">"{debouncedSearchText}"의 날씨정보는 제공되지 않습니다.</span>}
           </li>}
         </ul>
       </DropdownMenuContent>
