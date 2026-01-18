@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface Favorite {
   district: string;
-  nickname: string;
+  nickname?: string;
 }
 
 interface FavoritesState {
