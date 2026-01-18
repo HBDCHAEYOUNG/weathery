@@ -4,7 +4,7 @@ import type {
 import getShortForecastBaseTime from "../lib/weather-utils/get-short-forecast-base-time";
 import getUltraShortNowcastBaseTime from "../lib/weather-utils/get-ultra-short-nowcast-base-time";
 
-const BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
+const BASE_URL = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
 
 const SERVICE_KEY = import.meta.env.VITE_WEATHER_SERVICE_KEY;
 
