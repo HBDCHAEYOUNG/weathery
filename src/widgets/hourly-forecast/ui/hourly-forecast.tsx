@@ -37,7 +37,7 @@ function HourlyForecast({ todayTemps, tomorrowTemps }: HourlyForecastProps) {
                   key={`${hour.date}-${hour.time}`}
                   className="px-2 basis-auto shrink-0 border-r border-gray-300"
                 >
-                  <div className="flex flex-col items-center gap-1.5 w-8">
+                  <div className="flex flex-col items-center gap-1.5 w-9">
                     <span className="text-sm font-medium">{displayTime}</span>
                     <div className="text-2xl">{hour.icon}</div>
                     <span className="text-sm font-bold">{hour.temp}°</span>
@@ -57,12 +57,12 @@ function HourlyForecast({ todayTemps, tomorrowTemps }: HourlyForecastProps) {
                     key={`${hour.date}-${hour.time}`}
                     className="px-2 basis-auto shrink-0 border-r border-gray-300"
                   >
-                    <div className="flex flex-col items-center gap-1.5 w-8">
+                    <div className="flex flex-col items-center gap-1.5 w-9">
                       <span
                         className={cn(
                           "text-sm font-medium",
                           isTomorrowLabel &&
-                            "bg-purple-500 text-xs text-white px-1 rounded-full",
+                            "bg-purple-500 text-xs text-white px-1.5 rounded-full mb-1",
                         )}
                       >
                         {displayTime}
