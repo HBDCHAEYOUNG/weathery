@@ -140,7 +140,7 @@ src/
 src/
 ├── app/                    # 애플리케이션 설정
 │   ├── layouts/           # 레이아웃 컴포넌트
-│   ├── providers/         # Context Provider
+│   ├── providers/         # Provider 컴포넌트
 │   ├── routes/            # 라우팅 설정
 │   └── styles/            # 전역 스타일
 ├── pages/                  # 페이지 컴포넌트
@@ -149,15 +149,15 @@ src/
 ├── widgets/                # 독립적인 UI 블록
 │   ├── current-weather/   # 현재 날씨 위젯
 │   ├── hourly-forecast/   # 시간별 예보 위젯
+│   ├── weather-header/    # 날씨 헤더 위젯
 │   └── header/            # 헤더 위젯
 ├── features/               # 비즈니스 기능
-│   ├── weather/           # 날씨 데이터 훅
 │   └── favorite/          # 즐겨찾기 기능
 ├── entities/               # 비즈니스 엔티티
-│   ├── navigation/        # 네비게이션 엔티티
-│   └── weather/           # 날씨 엔티티
+│   └── navigation/        # 네비게이션 엔티티
 └── shared/                 # 공유 리소스
     ├── api/               # API 클라이언트
+    ├── const/             # 상수 데이터
     ├── hook/              # 공유 훅
     ├── lib/               # 유틸리티 함수
     ├── model/             # 데이터 모델 및 쿼리
