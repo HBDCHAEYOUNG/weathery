@@ -1,73 +1,166 @@
-# React + TypeScript + Vite
+# Weathery - 실시간 날씨 정보 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+한국 지역의 실시간 날씨 정보를 제공하는 웹 애플리케이션입니다. 기상청 공공데이터 API와 카카오 지도 API를 활용하여 정확한 날씨 정보를 제공합니다.
 
-Currently, two official plugins are available:
+## 🚀 프로젝트 실행 방법
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 환경 변수 설정
 
-## React Compiler
+프로젝트 루트에 `.env` 파일을 생성하고 다음 환경 변수를 설정하세요:
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_WEATHER_SERVICE_KEY=기상청_API_서비스키
+VITE_KAKAO_REST_API_KEY=카카오_REST_API_키
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 설치 및 실행
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 의존성 설치
+pnpm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 개발 서버 실행
+pnpm dev
+
+# 프로덕션 빌드
+pnpm build
+
+# 빌드 결과물 미리보기
+pnpm preview
+```
+
+## ✨ 구현한 기능
+
+### 1. 현재 위치 기반 날씨 조회
+- 브라우저 Geolocation API를 사용하여 사용자의 현재 위치를 자동으로 감지
+- 현재 위치의 실시간 날씨 정보 표시
+
+### 2. 도시 검색 및 날씨 조회
+- 한국 전국의 시·도·군·면·리·동 단위로 도시 검색
+- 검색 결과를 통한 특정 지역 날씨 조회
+- URL 파라미터를 통한 지역별 날씨 페이지 접근 (`/:district`)
+
+### 3. 즐겨찾기 기능
+- 최대 6개까지 도시 즐겨찾기 추가
+- 즐겨찾기한 도시에 닉네임 설정 가능
+- 즐겨찾기 목록에서 편집 및 삭제 기능
+- Zustand persist 미들웨어를 통한 로컬 스토리지 저장
+
+### 4. 날씨 정보 표시
+- **현재 날씨**: 초단기실황 데이터를 통한 현재 온도 표시
+- **단기 예보**: 최고/최저 기온 및 날씨 상태 표시
+- **시간별 예보**: 오늘과 내일의 시간별 온도 및 날씨 아이콘을 캐러셀로 표시
+
+### 5. 반응형 UI
+- 모바일과 데스크톱 환경에 최적화된 반응형 디자인
+- Tailwind CSS를 활용한 일관된 디자인 시스템
+
+## 🛠 기술 스택
+
+### 핵심 프레임워크 및 라이브러리
+- **React 19**: 최신 React 버전 사용
+- **TypeScript**: 타입 안정성 보장
+- **Vite**: 빠른 개발 환경 및 빌드 도구
+- **React Router v7**: 클라이언트 사이드 라우팅
+
+### 상태 관리 및 데이터 페칭
+- **TanStack Query (React Query)**: 서버 상태 관리 및 캐싱
+- **Zustand**: 클라이언트 상태 관리 (즐겨찾기, 드롭다운 상태)
+
+### 스타일링
+- **Tailwind CSS v4**: 유틸리티 기반 CSS 프레임워크
+- **Radix UI**: 접근성 있는 UI 컴포넌트 기반
+- **shadcn/ui**: Radix UI 기반 컴포넌트 라이브러리
+
+### 외부 API
+- **기상청 공공데이터 API**: 초단기실황 및 단기예보 데이터
+- **카카오 지도 API**: 주소-좌표 변환 (Geocoding) 및 역지오코딩
+
+### 유틸리티
+- **dayjs**: 날짜 및 시간 처리
+
+## 🏗 기술적 의사결정
+
+### 1. Feature-Sliced Design (FSD) 아키텍처
+
+프로젝트는 FSD 아키텍처 패턴을 따릅니다:
+
+```
+src/
+├── app/          # 애플리케이션 초기화, 라우팅, 레이아웃
+├── pages/        # 페이지 컴포넌트
+├── widgets/      # 독립적인 UI 블록
+├── features/     # 비즈니스 기능
+├── entities/     # 비즈니스 엔티티
+└── shared/       # 공유 유틸리티, API, 컴포넌트
+```
+
+- 코드의 명확한 계층 구조로 유지보수성 향상
+- 기능별 모듈화로 재사용성 증대
+- 팀 협업 시 명확한 파일 구조 제공
+
+### 2. TanStack Query 사용
+
+- 서버 상태와 클라이언트 상태의 명확한 분리
+- 자동 캐싱 및 리페칭으로 불필요한 API 호출 감소
+- 로딩, 에러 상태 관리의 표준화
+- DevTools를 통한 디버깅 용이성
+
+### 3. Zustand를 통한 클라이언트 상태 관리
+
+- TypeScript와의 우수한 통합
+- persist 미들웨어를 통한 간편한 로컬 스토리지 연동
+- 작은 번들 사이즈
+
+### 4. Vite 사용
+
+- 빠른 개발 서버 시작 시간
+- HMR(Hot Module Replacement)의 우수한 성능
+- 최신 ES 모듈 기반 빌드
+- TypeScript 및 React 플러그인의 우수한 지원
+
+### 5. Tailwind CSS v4
+
+- 유틸리티 클래스를 통한 빠른 스타일링
+- 일관된 디자인 시스템 구축
+- 번들 크기 최적화 (사용하지 않는 CSS 제거)
+- 반응형 디자인 구현의 용이성
+
+### 6. Debounce를 통한 검색 최적화
+
+도시 검색 시 300ms debounce를 적용하여 불필요한 필터링 연산을 줄였습니다.
+
+- 성능 최적화
+- 사용자 입력 중 불필요한 렌더링 방지
+- 대용량 데이터셋(korea-districts.json) 처리 시 효율성 향상
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── app/                    # 애플리케이션 설정
+│   ├── layouts/           # 레이아웃 컴포넌트
+│   ├── providers/         # Context Provider
+│   ├── routes/            # 라우팅 설정
+│   └── styles/            # 전역 스타일
+├── pages/                  # 페이지 컴포넌트
+│   ├── home/              # 홈 페이지
+│   └── favorites/         # 즐겨찾기 페이지
+├── widgets/                # 독립적인 UI 블록
+│   ├── current-weather/   # 현재 날씨 위젯
+│   ├── hourly-forecast/   # 시간별 예보 위젯
+│   └── header/            # 헤더 위젯
+├── features/               # 비즈니스 기능
+│   ├── weather/           # 날씨 데이터 훅
+│   └── favorite/          # 즐겨찾기 기능
+├── entities/               # 비즈니스 엔티티
+│   ├── navigation/        # 네비게이션 엔티티
+│   └── weather/           # 날씨 엔티티
+└── shared/                 # 공유 리소스
+    ├── api/               # API 클라이언트
+    ├── hook/              # 공유 훅
+    ├── lib/               # 유틸리티 함수
+    ├── model/             # 데이터 모델 및 쿼리
+    ├── store/             # 전역 상태 스토어
+    └── ui/                # 공유 UI 컴포넌트
 ```
