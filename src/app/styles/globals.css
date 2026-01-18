@@ -50,15 +50,6 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
@@ -72,35 +63,10 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }
 
@@ -185,5 +151,60 @@ button:focus-visible {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  [data-sonner-toast] {
+    background: rgb(59, 59, 59) !important;
+    color: white !important;
+    border: none !important;
+    text-align: center !important;
+    font-size: 1.125rem !important;
+  }
+
+  [data-sonner-toast] [data-content],
+  [data-sonner-toast] [data-title] {
+    text-align: center !important;
+    font-size: 1.125rem !important;
+  }
+}
+
+@layer utilities {
+  .common-padding-x {
+    @apply px-4;
+  }
+  .common-padding-y {
+    @apply py-4;
+  }
+  .common-padding-left {
+    @apply pl-4;
+  }
+  .common-padding-right {
+    @apply pr-4;
+  }
+  .common-padding-bottom {
+    @apply pb-4;
+  }
+  .common-padding {
+    @apply px-4 py-4;
+  }
+
+  .min-w{
+    @apply min-w-[320px];
+  }
+  .max-w{
+    @apply max-w-[800px];
+  }
+
+  @keyframes scale-subtle {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-scale-subtle {
+    animation: scale-subtle 3s ease-in-out infinite;
   }
 }

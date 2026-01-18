@@ -7,7 +7,7 @@ function HomePage() {
   const { nowcastData, forecastData, todayTemps, tomorrowTemps } = useWeatherData();
 
   return (
-    <div className="w-screen min-w-[320px] max-w-[800px] mx-auto">
+    <div className="w-screen min-w max-w">
       <WeatherHeader />
       
       <CurrentWeather 

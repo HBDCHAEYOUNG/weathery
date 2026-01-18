@@ -25,7 +25,7 @@ function SearchDropdown() {
       <DropdownMenuTrigger className="common-padding-right text-2xl">
         {isOpen ? "✕" : "🔍"}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-background w-screen h-screen z-50 border-none">
+      <DropdownMenuContent className="bg-background w-screen h-screen z-50 border-none min-w">
         <div className="common-padding relative">
           <Input
             placeholder="국내 도시를 검색해 보세요"
