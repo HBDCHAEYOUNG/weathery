@@ -1,13 +1,14 @@
-import type { GeocodeResponse } from "@/shared/model/geocode.schema";
+import type { GeocodeResponse, ReverseGeocodeResponse } from "@/shared/model/geocode.schema";
 import { convertLatLonToGrid } from "../lib/grid-converter";
 
 const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+const BASE_URL = "https://dapi.kakao.com/v2/local";
 
 async function fetchGeocodeApi(
   district: string
 ): Promise<GeocodeResponse | null> {
   const response = await fetch(
-    `https://dapi.kakao.com/v2/local/search/address.json?query=${district}`,
+    `${BASE_URL}/search/address.json?query=${district}`,
     {
       headers: {
         Authorization: `KakaoAK ${REST_API_KEY}`,
@@ -27,4 +28,21 @@ async function fetchGeocodeApi(
   return null;
 }
 
-export default fetchGeocodeApi;
+async function fetchReverseGeocodeApi(lng: number, lat: number): Promise<ReverseGeocodeResponse | null> {  
+  const response = await fetch(
+    `${BASE_URL}/geo/coord2regioncode.json?x=${lng}&y=${lat}`,
+    {
+      headers: {
+        Authorization: `KakaoAK ${REST_API_KEY}`,
+      },
+    }
+  );
+  if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+  const data = await response.json();
+  if (data.documents && data.documents.length > 0) {
+    return data.documents[0].address_name;
+  }
+  return null;
+}
+export { fetchGeocodeApi, fetchReverseGeocodeApi };

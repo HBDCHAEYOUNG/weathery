@@ -1,7 +1,8 @@
+import { cn } from "@/shared/lib/utils";
 import { useFavoritesStore } from "@/shared/store/favorites.store";
 import { toast } from "sonner";
 
-function FavoriteToggleButton({ district }: { district: string }) {
+function FavoriteToggleButton({ district, className }: { district: string, className?: string }) {
   const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
 
   const handleFavoriteClick = (district: string) => {
@@ -17,7 +18,7 @@ function FavoriteToggleButton({ district }: { district: string }) {
   
   return (
     <button
-      className="text-gray-300 ml-auto bg-transparent text-2xl z-10"
+      className={cn("text-gray-300 ml-auto bg-transparent text-2xl z-10", className)}
       onClick={() => handleFavoriteClick(district)}
     >
       {favorites.some((favorite) => favorite.district === district) ? "★" : "☆"}

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 interface ParsedWeather {
   minTemp: number;
   maxTemp: number;
-  hourlyTemps: Array<{ time: string; temp: number }>;
+  hourlyTemps: Array<{ date: string; time: string; temp: number; icon?: string }>;
   weatherIcon: string;
   status: string;
 }
@@ -100,7 +100,6 @@ function parseShortForecastData(response: ForecastResponse | null | undefined): 
   const items = response.items.item;
   const now = dayjs();
   const today = now.format('YYYYMMDD');
-  
   // 현재 시간에 가장 가까운 예보 시간 찾기 (SKY, PTY 등 다른 카테고리용)
   const getNearestForecastTime = () => {
     const forecastItems = items
@@ -138,14 +137,44 @@ function parseShortForecastData(response: ForecastResponse | null | undefined): 
     return item ? parseFloat(item.fcstValue) : 0;
   };
 
-  // 시간별 기온 배열 생성 (TMP 카테고리, 오늘 날짜)
+  // 시간별 기온 배열 생성 (TMP 카테고리, 현재 시간 이후)
   const hourlyTemps = items
-    .filter(item => item.category === 'TMP' && item.fcstDate === today)
-    .map(item => ({
-      time: item.fcstTime,
-      temp: parseFloat(item.fcstValue)
-    }))
-    .sort((a, b) => a.time.localeCompare(b.time));
+    .filter(item => {
+      if (item.category !== 'TMP') return false;
+      // 예보 시간이 현재 시간 이후인지 확인 (다음 날짜 포함)
+      const forecastTime = dayjs(`${item.fcstDate}${item.fcstTime}`, 'YYYYMMDDHHmm');
+      return forecastTime.isAfter(now);
+    })
+    .map(item => {
+      // 같은 시간대의 SKY, PTY 정보 찾기
+      const skyItem = items.find(
+        i => i.category === 'SKY' && 
+        i.fcstDate === item.fcstDate && 
+        i.fcstTime === item.fcstTime
+      );
+      const ptyItem = items.find(
+        i => i.category === 'PTY' && 
+        i.fcstDate === item.fcstDate && 
+        i.fcstTime === item.fcstTime
+      );
+      
+      const skyCode = skyItem?.fcstValue || '1';
+      const ptyCode = ptyItem?.fcstValue || '0';
+      const icon = getWeatherIcon(ptyCode, skyCode);
+      
+      return {
+        date: item.fcstDate,
+        time: item.fcstTime,
+        temp: parseFloat(item.fcstValue),
+        icon
+      };
+    })
+    .sort((a, b) => {
+      // 날짜와 시간을 함께 비교하여 정렬
+      const dateTimeA = `${a.date}${a.time}`;
+      const dateTimeB = `${b.date}${b.time}`;
+      return dateTimeA.localeCompare(dateTimeB);
+    });
 
   const minTemp = getMinMaxTemp('TMN');
   const maxTemp = getMinMaxTemp('TMX');
